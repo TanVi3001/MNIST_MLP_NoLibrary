@@ -20,37 +20,46 @@ Dự án này trình bày một triển khai đơn giản nhưng mạnh mẽ c�
 ## 🧠 Kiến trúc Mạng Nơ-ron (MLP)
 
 Mạng nơ-ron được xây dựng trong dự án có kiến trúc 3 lớp:
-* **Lớp Đầu vào (Input Layer):** 784 nơ-ron (tương ứng với \(28 \times 28\) pixel của ảnh MNIST đã được làm phẳng).
+* **Lớp Đầu vào (Input Layer):** 784 nơ-ron (tương ứng với $28 \times 28$ pixel của ảnh MNIST đã được làm phẳng).
 * **Lớp Ẩn (Hidden Layer):** 128 nơ-ron, sử dụng hàm kích hoạt **ReLU**.
 * **Lớp Đầu ra (Output Layer):** 10 nơ-ron (tương ứng với 10 chữ số từ 0 đến 9), sử dụng hàm kích hoạt **Softmax** để đưa ra phân phối xác suất.
 
 ### 📐 Công thức Toán học
 
 #### 1. Lan truyền tiến (Forward Propagation)
-\[Z_1 = X \cdot W_1 + b_1\]
-\[A_1 = \text{ReLU}(Z_1)\]
-\[Z_2 = A_1 \cdot W_2 + b_2\]
-\[A_2 = \text{Softmax}(Z_2) \quad \text{(Xác suất dự đoán)}\]
+$$Z_1 = X \cdot W_1 + b_1$$
+
+$$A_1 = \text{ReLU}(Z_1)$$
+
+$$Z_2 = A_1 \cdot W_2 + b_2$$
+
+$$A_2 = \text{Softmax}(Z_2) \quad \text{(Xác suất dự đoán)}$$
 
 #### 2. Lan truyền ngược (Backward Propagation)
-\[dZ_2 = A_2 - Y_{\text{one\_hot}} \quad \text{(Sai số)}\]
-\[dW_2 = \frac{1}{m} A_1^T \cdot dZ_2\]
-\[db_2 = \frac{1}{m} \sum_{\text{hàng}} dZ_2\]
-\[dZ_1 = (dZ_2 \cdot W_2^T) \odot \text{ReLU}'(Z_1)\]
-\[dW_1 = \frac{1}{m} X^T \cdot dZ_1\]
-\[db_1 = \frac{1}{m} \sum_{\text{hàng}} dZ_1\]
+$$dZ_2 = A_2 - Y_{\text{one\_hot}} \quad \text{(Sai số)}$$
+
+$$dW_2 = \frac{1}{m} A_1^T \cdot dZ_2$$
+
+$$db_2 = \frac{1}{m} \sum_{\text{hàng}} dZ_2$$
+
+$$dZ_1 = (dZ_2 \cdot W_2^T) \odot \text{ReLU}'(Z_1)$$
+
+$$dW_1 = \frac{1}{m} X^T \cdot dZ_1$$
+
+$$db_1 = \frac{1}{m} \sum_{\text{hàng}} dZ_1$$
 
 #### 3. Cập nhật Trọng số (Gradient Descent)
-\[W = W - \alpha \cdot dW\]
-\[b = b - \alpha \cdot db\]
+$$W = W - \alpha \cdot dW$$
+
+$$b = b - \alpha \cdot db$$
 
 **Trong đó:**
-* \(X\): Dữ liệu đầu vào.
-* \(Y_{\text{one\_hot}}\): Nhãn thực tế dưới dạng One-hot encoding.
-* \(W_1, b_1\): Trọng số và Bias của lớp ẩn.
-* \(W_2, b_2\): Trọng số và Bias của lớp đầu ra.
-* \(\alpha\): Tốc độ học (learning rate).
-* \(m\): Số lượng mẫu trong một mini-batch.
+* $X$: Dữ liệu đầu vào.
+* $Y_{\text{one\_hot}}$: Nhãn thực tế dưới dạng One-hot encoding.
+* $W_1, b_1$: Trọng số và Bias của lớp ẩn.
+* $W_2, b_2$: Trọng số và Bias của lớp đầu ra.
+* $\alpha$: Tốc độ học (learning rate).
+* $m$: Số lượng mẫu trong một mini-batch.
 
 ---
 
@@ -78,7 +87,7 @@ y = mnist.target.to_numpy().astype(int)
 ```
 
 ### 2. Tiền xử lý và Chia tập dữ liệu
-Dữ liệu được chuẩn hóa về khoảng \([0, 1]\) và chia thành tập huấn luyện (60.000 ảnh) và tập kiểm tra (10.000 ảnh):
+Dữ liệu được chuẩn hóa về khoảng $[0, 1]$ và chia thành tập huấn luyện (60.000 ảnh) và tập kiểm tra (10.000 ảnh):
 
 ```python
 X_normalized = X.astype('float32') / 255.0
@@ -149,6 +158,5 @@ weighted avg     0.9735    0.9734    0.9734     10000
 
 ### Ma trận Nhầm lẫn (Confusion Matrix)
 Ma trận nhầm lẫn giúp trực quan hóa hiệu suất của mô hình, hiển thị rõ ràng số lượng mẫu được phân loại đúng và các lỗi nhầm lẫn cụ thể giữa từng cặp chữ số.
-```text
-[Bạn có thể chèn hình ảnh ma trận nhầm lẫn chạy từ mã nguồn của bạn vào đây]
-```
+
+*(Bạn có thể chèn hình ảnh ma trận nhầm lẫn chạy từ mã nguồn của bạn vào đây)*
